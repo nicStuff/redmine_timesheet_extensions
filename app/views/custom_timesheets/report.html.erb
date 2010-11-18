@@ -1,0 +1,84 @@
+<div class="contextual">
+  <%= link_to_csv_export(@timesheet) %>
+  <%= permalink_to_timesheet(@timesheet) %>
+</div>
+
+<h2><%= l(:timesheet_title)%></h2>
+
+<%= render :partial => 'form' %>
+
+<div id="time_entries">
+
+  <% if !@timesheet.time_entries.blank? && @timesheet.time_entries.length > 0 %>
+    <%# TODO preparare il totale nel controller %>
+    <h2><%= l(:label_spent_time) %> (<%= @timesheet.total_hours -%> <%= h(l(:field_hours)) -%>,
+                                    <%= @timesheet.total_billed_hours -%> <%= l(:timesheet_billed_hours) -%>)</h2>
+
+    <table class="list issues">
+        <thead>
+          <%= table_header '5', link_to(image_tag('toggle_check.png'), {}, :onclick => 'toggleIssuesSelection(Element.up(this, "table")); return false;',
+                                                                 :title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}", :class => 'toggle-all'), 'id' %>
+          <%= table_header '8',  l(:label_date),      'spent_on' %>
+          <%= table_header '5',  l(:timesheet_week_of_year), 'tweek' %>
+          <%= table_header '10', l(:label_member),    'user_id' %>
+          <%= table_header '10', l(:label_activity),  'activity_id' %>
+          <%= table_header '15', l(:label_project),   'project_id' %>
+          <%= table_header '10', l(:label_issue),     'issue_id' %>
+          <%= table_header '20', l(:field_comments),  'comments' %>
+          <%= table_header '6',  l(:field_hours),     'hours' %>
+          <%= table_header '11', l(:timesheet_billed_hours),     'billed_hours' %>
+          <%= table_header '5', '',                   'id' %>
+        </thead>
+        <tbody>
+          <% @timesheet.time_entries.each do |time_entry| %>
+            <tr id="time_entry_<%= time_entry.id %>" class="time_entry <%= cycle("odd", "even") %> hascontextmenu">
+              <%= table_col true, 'id' do check_box_tag('ids[]', time_entry.id, false, { :class => 'checkbox' }) end %>
+              <%= table_col true, 'spent_on' do format_date(time_entry.spent_on) end %>
+              <%= table_col(true, 'tweek') { time_entry.tweek.to_s } %>
+              <%= table_col true, 'user_id' do time_entry.user.name end %>
+              <%= table_col true, 'activity_id' do time_entry.activity.name end %>
+              <%= table_col true, 'project_id' do time_entry.project.name end %>
+              <% if selected?('issue_id') %>
+                <td align="center">
+                  <% if time_entry.issue %>
+                  <div class="tooltip">
+                    <%= link_to_issue time_entry.issue %>
+                    <span class="tip">
+                      <%= render_issue_tooltip time_entry.issue %>
+                    </span>
+                  </div>
+                  <% end %>
+                </td>
+              <% end %>
+              <%= table_col false, 'comments' do time_entry.comments end %>
+              <%= table_col true, 'hours' do number_with_precision(time_entry.hours, :precision => @precision) end %>
+              <%= table_col true, 'billed_hours' do '<strong>' + number_with_precision(time_entry.billed_hours, :precision => @precision) + '</strong>' unless time_entry.billed_hours.blank? end %>
+              <% if selected?('id') %>
+                <td align="center">
+                  <% if time_entry.editable_by?(User.current) -%>
+                    <%= link_to image_tag('edit.png'), {:controller => 'timelog', :action => 'edit', :id => time_entry},
+                                                     :title => l(:button_edit) %>
+                    <%= link_to image_tag('delete.png'), {:controller => 'timelog', :action => 'destroy', :id => time_entry},
+                                                       :confirm => l(:text_are_you_sure),
+                                                       :method => :post,
+                                                       :title => l(:button_delete) %>
+                 <% end -%>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br />
+
+  <% end %>
+</div>
+
+<% content_for(:header_tags) do %>
+  <%= javascript_include_tag 'context_menu' %>
+  <%= stylesheet_link_tag 'context_menu' %>
+  <%= stylesheet_link_tag "main.css", :plugin => "redmine_timesheet_extensions", :media => 'all' %>
+<% end %>
+
+<div id="context-menu" style="display: none;"></div>
+<%= javascript_tag "new ContextMenu('#{url_for(:controller => 'timesheet', :action => 'context_menu')}')" %>

@@ -1,0 +1,166 @@
+
+<%
+=begin
+  Logica per l'autocompletamento dei campi temporali - Informazioni
+  -----------------------------------------------------------------
+
+  In questo file è realizzata la logica in javascript per completare i campi
+  del tempo in base ad informazioni parzialmente inserite. Specificando che
+  l'ora di inizio deve sempre essere specificata, l'auto completamento viene
+  fatto secondo le seguenti regole:
+  - il campo "Ore" viene completato se è specificata l'ora di fine
+  - l'ora di fine viene completata se è specificato il campo "Ore"
+=end
+%>
+
+
+<script type="text/javascript">
+  var timeEntryHours = document.getElementById("time_entry_hours");
+  var timeEntryStartHour = document.getElementById("time_entry_start_hour");
+  var timeEntryStartMinute = document.getElementById("time_entry_start_minute");
+  var timeEntryEndHour = document.getElementById("time_entry_end_hour");
+  var timeEntryEndMinute = document.getElementById("time_entry_end_minute");
+
+  if (timeEntryHours.addEventListener) {
+      timeEntryHours.addEventListener("change", TimeEntryHoursAfterUpdate, false);
+      timeEntryStartHour.addEventListener("change", TimeEntryStartAfterUpdate, false);
+      timeEntryStartMinute.addEventListener("change", TimeEntryStartAfterUpdate, false);
+      timeEntryEndHour.addEventListener("change", TimeEntryEndAfterUpdate, false);
+      timeEntryEndMinute.addEventListener("change", TimeEntryEndAfterUpdate, false);
+  } else if (timeEntryHour.attachEvent) {
+      timeEntryHours.attachEvent("change", TimeEntryHoursAfterUpdate);
+      timeEntryStartHour.attachEvent("change", TimeEntryStartAfterUpdate);
+      timeEntryStartMinute.attachEvent("change", TimeEntryStartAfterUpdate);
+      timeEntryEndHour.attachEvent("change", TimeEntryEndAfterUpdate);
+      timeEntryEndMinute.attachEvent("change", TimeEntryEndAfterUpdate);
+  }
+
+  /*
+   * Funzione chiamata in seguito all'aggiornamento della casella delle ore.
+   * Se l'ora di inizio è valorizzata imposta l'ora di fine aggiungendo il numero di ore specificato all'ora di inizio.
+   * Se l'ora di fine è valorizzato imposta l'ora di inizio sottraendo il numero di ore specificato dall'ora di fine
+   */
+  function TimeEntryHoursAfterUpdate() {
+      var hours = document.getElementById('time_entry_hours').value;
+      var startHourIndex = document.getElementById('time_entry_start_hour').selectedIndex;
+      var startMinuteIndex = document.getElementById('time_entry_start_minute').selectedIndex;
+      var endHourIndex = document.getElementById('time_entry_end_hour').selectedIndex;
+      var endMinuteIndex = document.getElementById('time_entry_end_minute').selectedIndex;
+      if (startHourIndex > 0 && startMinuteIndex > 0) {
+          setEndTime();
+      } else if (endHourIndex > 0 && endMinuteIndex > 0) {
+          setStartTime();
+      }
+  }
+
+  /*
+   * Funzione chiamata in seguito all'aggiornamento dell'ora di inizio.
+   * Se l'ora di fine non è valorizzata ed il numero di ore è valorizzato imposta l'ora di fine aggiungendo il numero di ore specificato all'ora di inizio.
+   * Se l'ora di fine è valorizzata calcola il numero di ore come differenza tra l'ora di fine e l'ora di inizio.
+   */
+  function TimeEntryStartAfterUpdate() {
+      var hours = document.getElementById('time_entry_hours').value;
+      var startHourIndex = document.getElementById('time_entry_start_hour').selectedIndex;
+      var startMinuteIndex = document.getElementById('time_entry_start_minute').selectedIndex;
+      var endHourIndex = document.getElementById('time_entry_end_hour').selectedIndex;
+      var endMinuteIndex = document.getElementById('time_entry_end_minute').selectedIndex;
+      if (endHourIndex == 0 || endMinuteIndex == 0) {
+          setEndTime();
+      } else if (endHourIndex > 0 && endMinuteIndex > 0) {
+          setHours();
+      }
+  }
+
+  /*
+   * Funzione chiamata in seguito all'aggiornamento dell'ora di fine.
+   * Se l'ora di inizio non è valorizzata ed il numero di ore è valorizzato imposta l'ora di inizio sottraendo il numero di ore specificato all'ora di fine.
+   * Se l'ora di inizio è valorizzata calcola il numero di ore come differenza tra l'ora di fine e l'ora di inizio.
+   */
+  function TimeEntryEndAfterUpdate() {
+      var hours = document.getElementById('time_entry_hours').value;
+      var startHourIndex = document.getElementById('time_entry_start_hour').selectedIndex;
+      var startMinuteIndex = document.getElementById('time_entry_start_minute').selectedIndex;
+      var endHourIndex = document.getElementById('time_entry_end_hour').selectedIndex;
+      var endMinuteIndex = document.getElementById('time_entry_end_minute').selectedIndex;
+      if (startHourIndex == 0 || startMinuteIndex == 0) {
+          setStartTime();
+      } else if (startHourIndex > 0 && startMinuteIndex > 0) {
+          setHours();
+      }
+  }
+
+  /*
+   * Calcola il numero di ore come differenza tra ora di fine ed ora di inizio
+   */
+  function setHours() {
+      var startHourIndex = document.getElementById('time_entry_start_hour').selectedIndex;
+      var startMinuteIndex = document.getElementById('time_entry_start_minute').selectedIndex;
+      var endHourIndex = document.getElementById('time_entry_end_hour').selectedIndex;
+      var endMinuteIndex = document.getElementById('time_entry_end_minute').selectedIndex;
+      if (startHourIndex > 0 && startMinuteIndex > 0 && endHourIndex > 0 && endMinuteIndex > 0) {
+          var startHour = parseFloat(document.getElementById('time_entry_start_hour').options[startHourIndex].value);
+          var startMinute = parseFloat(document.getElementById('time_entry_start_minute').options[startMinuteIndex].value);
+          var endHour = parseFloat(document.getElementById('time_entry_end_hour').options[endHourIndex].value);
+          var endMinute = parseFloat(document.getElementById('time_entry_end_minute').options[endMinuteIndex].value);
+          var hours = Math.round(((endHour * 60 + endMinute - (startHour * 60 + startMinute)) / 60) * 100) / 100;
+          if (hours < 0) {
+              alert("Attenzione!!! L'orario di inizio è successivo all'orario di fine.");
+              document.getElementById('time_entry_hours').value = null;
+          } else {
+              document.getElementById('time_entry_hours').value = hours
+          }
+      }
+  }
+
+  /*
+   * Calcola l'ora di inizio sottraendo il numero di ore dall'ora di fine
+   */
+  function setStartTime() {
+      var hours = document.getElementById('time_entry_hours').value;
+      var startHourIndex = document.getElementById('time_entry_start_hour').selectedIndex;
+      var startMinuteIndex = document.getElementById('time_entry_start_minute').selectedIndex;
+      var endHourIndex = document.getElementById('time_entry_end_hour').selectedIndex;
+      var endMinuteIndex = document.getElementById('time_entry_end_minute').selectedIndex;
+      if (endHourIndex > 0 && endMinuteIndex > 0 && !isNaN(hours)) {
+          var endHour = document.getElementById('time_entry_end_hour').options[endHourIndex].value;
+          var endMinute = document.getElementById('time_entry_end_minute').options[endMinuteIndex].value;
+          var startTime = (parseFloat(endHour) * 60 + parseFloat(endMinute)) - (parseFloat(hours) * 60);
+          if (startTime < 0) {
+              alert("Attenzione!!! L'orario di inizio non è compreso nella giornata corrente.");
+              document.getElementById('time_entry_start_hour').selectedIndex = 0;
+              document.getElementById('time_entry_start_minute').selectedIndex = 0;
+          } else {
+              var startHour = Math.floor(startTime / 60);
+              var startMinute = Math.floor((startTime - startHour * 60) / 5) * 5;
+              document.getElementById('time_entry_start_hour').value = startHour;
+              document.getElementById('time_entry_start_minute').value = startMinute;
+          }
+      }
+  }
+
+  /*
+   * Calcola l'ora di fine aggiungendo il numero di ore dall'ora di inizio.
+   */
+  function setEndTime() {
+      var hours = document.getElementById('time_entry_hours').value;
+      var startHourIndex = document.getElementById('time_entry_start_hour').selectedIndex;
+      var startMinuteIndex = document.getElementById('time_entry_start_minute').selectedIndex;
+      var endHourIndex = document.getElementById('time_entry_end_hour').selectedIndex;
+      var endMinuteIndex = document.getElementById('time_entry_end_minute').selectedIndex;
+      if (startHourIndex > 0 && startMinuteIndex > 0 && !isNaN(hours)) {
+          var startHour = document.getElementById('time_entry_start_hour').options[startHourIndex].value;
+          var startMinute = document.getElementById('time_entry_start_minute').options[startMinuteIndex].value;
+          var endTime = (parseFloat(startHour) * 60 + parseFloat(startMinute)) + (parseFloat(hours) * 60);
+          if (endTime >= 24*60) {
+              alert("Attenzione!!! L'orario di fine non è compreso nella giornata corrente.");
+              document.getElementById('time_entry_end_hour').selectedIndex = 0;
+              document.getElementById('time_entry_end_minute').selectedIndex = 0;
+          } else {
+              var endHour = Math.floor(endTime / 60);
+              var endMinute = Math.ceil((endTime - endHour * 60) / 5) * 5;
+              document.getElementById('time_entry_end_hour').value = endHour;
+              document.getElementById('time_entry_end_minute').value = endMinute;
+          }
+      }
+  }
+</script>

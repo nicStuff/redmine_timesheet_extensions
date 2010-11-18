@@ -1,0 +1,79 @@
+<table class="list time-entries">
+<thead>
+<tr>
+<%= sort_header_tag('spent_on', :caption => l(:label_date), :default_order => 'desc') %>
+<%= sort_header_tag('user', :caption => l(:label_member)) %>
+<%= sort_header_tag('activity', :caption => l(:label_activity)) %>
+<%= sort_header_tag('project', :caption => l(:label_project)) %>
+<%= sort_header_tag('issue', :caption => l(:label_issue), :default_order => 'desc') %>
+<th><%= l(:field_comments) %></th>
+<!-- CPRS-MO -->
+
+
+<%
+  # Ripetere il metodo qui non è DRY perché l'ho già definito nello hook per
+  # la form dell'inserimento. FIXME
+  def hours_min_string(number)
+    str = number.to_s
+    str = "0#{number}" if number < 10
+    str
+  end
+%>
+
+
+  <th><%= l(:field_start_hour) %></th>
+  
+  <!-- ECPRS-MO -->
+<%= sort_header_tag('hours', :caption => l(:field_hours)) %>
+
+<!-- CPRS-MO -->
+  <th><%= l(:field_billed_hours) %></th>
+<!-- ECPRS-MO -->
+<th></th>
+</tr>
+</thead>
+<tbody>
+<% entries.each do |entry| -%>
+<tr class="time-entry <%= cycle("odd", "even") %>">
+<td class="spent_on"><%= format_date(entry.spent_on) %></td>
+<td class="user"><%=h entry.user %></td>
+<td class="activity"><%=h entry.activity %></td>
+<td class="project"><%=h entry.project %></td>
+<td class="subject">
+<% if entry.issue -%>
+<%= entry.issue.visible? ? link_to_issue(entry.issue, :truncate => 50) : "##{entry.issue.id}" -%>
+<% end -%>
+</td>
+<td class="comments"><%=h entry.comments %></td>
+<!-- CPRS-MO -->
+<td class="start-time">
+<% if entry.start_time.blank? %>
+-
+<% else %>
+<%= hours_min_string entry.start_time.hour -%>:<%= hours_min_string entry.start_time.min -%>
+<% end %>
+</td>
+<!-- ECPRS-MO -->
+<td class="hours"><%= html_hours("%.2f" % entry.hours) %></td>
+<!-- CPRS-MO -->
+
+<td class="billed-hours">
+  <%= entry.billed_hours.blank? ? "-" : entry.billed_hours %>
+</td>
+
+<!-- ECPRS-MO -->
+
+<td align="center">
+<% if entry.editable_by?(User.current) -%>
+    <%= link_to image_tag('edit.png'), {:controller => 'timelog', :action => 'edit', :id => entry, :project_id => nil},
+                                       :title => l(:button_edit) %>
+    <%= link_to image_tag('delete.png'), {:controller => 'timelog', :action => 'destroy', :id => entry, :project_id => nil},
+                                         :confirm => l(:text_are_you_sure),
+                                         :method => :post,
+                                         :title => l(:button_delete) %>
+<% end -%>
+</td>
+</tr>
+<% end -%>
+</tbody>
+</table>

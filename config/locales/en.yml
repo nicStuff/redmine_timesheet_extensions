@@ -1,0 +1,34 @@
+en:
+  field_start_hour: Start time
+  field_start_minute: ""
+  field_end_hour: End time
+  field_end_minute: ""
+  field_billed_hours: Billed hours
+
+  error_et_less_than_st: End time must be bigger than Start hour
+  error_et_mandatory_ifnot_hours: is mandatory if Hours field is empty
+  error_h_mb_grthan_zero: must be grater than 0
+
+  timesheet_title: Timesheet
+  timesheet_period: Period
+  timesheet_date_from_label: From
+  timesheet_date_to_label: To
+  timesheet_users_label: Users
+  timesheet_showing_users: 'showing time for: '
+  timesheet_permalink: '(Permalink to this timesheet)'
+  timesheet_group_by: Group by
+  timesheet_sort_by: Sort by
+  timesheet_week_of_year: Week of year
+
+  timesheet_groupby_day: Day
+  t_comment: Comment
+
+  timesheet_billed_hours: Billed hours
+  timesheet_total: Total
+
+  t_filters: Filters
+  t_fields_to_include: Fields to include
+
+  t_activities: Activities
+  t_projects: Projects
+  t_users: Users

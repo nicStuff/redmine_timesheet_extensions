@@ -1,0 +1,34 @@
+it:
+  field_start_hour: Ora di inizio
+  field_start_minute: ""
+  field_end_hour: Ora di fine
+  field_end_minute: ""
+  field_billed_hours: Ore fatturate
+  
+  error_et_less_than_st: L'ora di fine deve essere maggiore di quella di inizio
+  error_et_mandatory_ifnot_hours: obbligatoria se non è popolato il campo Ore
+  error_h_mb_grthan_zero: deve essere maggiore di 0
+  
+  timesheet_title: Consuntivo tempi
+  timesheet_period: Periodo
+  timesheet_date_from_label: Da
+  timesheet_date_to_label: A
+  timesheet_users_label: Utenti
+  timesheet_showing_users: 'tempi registrati da: '
+  timesheet_permalink: '(Permalink al consuntivo)'
+  timesheet_group_by: Raggruppa per
+  timesheet_sort_by: Ordina per
+  timesheet_week_of_year: Settimana dell'anno
+
+  timesheet_groupby_day: Giorno
+  t_comment: Commento
+
+  timesheet_billed_hours: Ore fatturate
+  timesheet_total: totali
+
+  t_filters: Filtri
+  t_fields_to_include: Campi da includere
+
+  t_activities: Attività
+  t_projects: Progetti
+  t_users: Utenti

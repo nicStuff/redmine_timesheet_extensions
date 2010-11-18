@@ -1,0 +1,89 @@
+<div id="form">
+  <% form_for :timesheet, :url =>{:action => 'report'} do |f| %>
+    <%# Scelta del periodo %>
+
+    <div id="filters" class="float-left">
+      <fieldset>
+        <legend><%= l :t_filters %></legend>
+
+        <div id="date-options" class="float-left">
+          <p><%= l(:timesheet_period) %></p>
+
+          <%= radio_button_tag 'timesheet[period_type]', '3', @timesheet.period_type == CustomTimesheet::ValidPeriodType[:month] %>
+          <%= select_tag 'timesheet[year]', options_for_select([Time.now.year, Time.now.year - 1], (@timesheet.year.blank? ? Time.new.year : @timesheet.year)) %>
+          <%= select_tag 'timesheet[month]', options_for_select(l('date.month_names'), (@timesheet.month.blank? ? 0 : l('date.month_names')[@timesheet.month])) %>
+
+          <br/><br/>
+
+          <%= radio_button_tag 'timesheet[period_type]', '1', @timesheet.period_type == CustomTimesheet::ValidPeriodType[:default] %>
+          <%= select_tag 'timesheet[period]', options_for_period_select((params[:timesheet].nil? ? nil : params[:timesheet][:period])),
+                                   :onfocus => '$("timesheet_period_type_1").checked = true;' %>
+          <br /><br />
+
+          <%= radio_button_tag 'timesheet[period_type]', '2', @timesheet.period_type == CustomTimesheet::ValidPeriodType[:free_period] %>
+          <span onclick="$('timesheet_period_type_2').checked = true;">
+            <label for="timesheet_date_from"><%= l(:timesheet_date_from_label)%>:</label><br />
+            <%= f.text_field "date_from", :size => 10 %><%= calendar_for('timesheet_date_from') %><br />
+
+            <label for="timesheet_date_to"><%= l(:timesheet_date_to_label)%>:</label><br />
+            <%= f.text_field "date_to", :size => 10 %><%= calendar_for('timesheet_date_to') %><br /><br />
+          </span>
+        </div>
+
+        <div id="sorting" class="float-left">
+          <label for="timesheet_sort"><%= l(:timesheet_sort_by) %>:</label><br />
+          <%= select_tag("timesheet[sort]", options_for_select(CustomTimesheet::SortOptions.invert.reject { |key, val| val == :hours || val == :billed_hours }, @timesheet.sort)) %>
+        </div>
+
+        <div id="projects" class="float-left">
+          <label for="timesheet_projects_" class="select_all"><%= l(:t_projects)%>:</label><br />
+          <%= project_options(@timesheet) %>
+        </div>
+
+        <div id="activities" class="float-left">
+          <label for="timesheet_activities_" class="select_all"><%= l(:t_activities)%>:</label><br />
+          <%= select_tag 'timesheet[activities][]', activity_options(@timesheet, @activities), { :multiple => true, :size => @list_size} %>
+        </div>
+
+        <div id="users" class="float-left">
+          <label for="timesheet_users_" class="select_all"><%= l(:t_users)%>:</label><br />
+          <%= select_tag 'timesheet[users][]', user_options(@timesheet), { :multiple => true, :size => @list_size} %>
+        </div>
+
+        <div class="clear"/>
+      </fieldset>
+    </div>
+
+    <div id="fields" class="float-left">
+      <fieldset>
+        <legend><%= l :t_fields_to_include %></legend>
+        
+        <div class="float-left columns-group first">
+          <%= complete_checkbox(:id, 'ID') %>
+          <%= complete_checkbox(:project_id, l(:field_project)) %>
+          <%= complete_checkbox(:user_id, l(:field_user)) %>
+          <%= complete_checkbox(:issue_id, l(:field_issue)) %>
+          <%= complete_checkbox(:comments, l(:t_comment)) %>
+        </div>
+
+        <div class="float-left columns-group">
+          <%= complete_checkbox(:activity_id, l(:field_activity)) %>
+          <%= complete_checkbox(:spent_on, l(:field_spent_on)) %>
+          <%= complete_checkbox(:tweek, l(:timesheet_week_of_year)) %>
+          <%= complete_checkbox(:hours, l(:field_hours)) %>
+          <%= complete_checkbox(:billed_hours, l(:timesheet_billed_hours)) %>
+        </div>
+
+        <div class="clear"/>
+      </fieldset>
+    </div>
+
+    <div class="clear"/>
+    <div class="center">
+      <%= submit_tag l(:button_apply),:class => 'button-small float-left button-apply' -%>
+    </div>
+  <% end %>
+
+  <%= button_to(l(:button_reset), {:controller => 'timesheet', :action => 'reset'}, :method => 'delete') %>
+  <div class="clear"/>
+</div>
