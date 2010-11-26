@@ -1,1 +1,1 @@
-= see [[the wiki page|https://github.com/nicStuff/redmine_timesheet_extensions/wiki/Plugin-description-and-instructions]]
+== see the wiki page[https://github.com/nicStuff/redmine_timesheet_extensions/wiki/Plugin-description-and-instructions]
