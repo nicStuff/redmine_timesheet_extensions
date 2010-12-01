@@ -1,6 +1,7 @@
 A Redmine plugin that furnishes some extensions for managing time entries.
 
 Copyright (C) 2010 Nicola Baisero
+The 'Timesheet' part of this plugin is based on the Redmine Timesheet plugin, copyright (c) Eric Davis
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
