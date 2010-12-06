@@ -1,0 +1,34 @@
+fr:
+  field_start_hour: Heure de début
+  field_start_minute: ""
+  field_end_hour: Heure de fin
+  field_end_minute: ""
+  field_billed_hours: Heures facturées
+
+  error_et_less_than_st: L'heure de fin doit être plus grande que l'heure de début
+  error_et_mandatory_ifnot_hours: est requis si le champ heure est vide
+  error_h_mb_grthan_zero: doit être plus grand que 0
+
+  timesheet_title: Feuille de temps
+  timesheet_period: Période
+  timesheet_date_from_label: De
+  timesheet_date_to_label: à
+  timesheet_users_label: Utilisateurs
+  timesheet_showing_users: 'montré le temps pour : '
+  timesheet_permalink: '(Lien permanent vers la feuille de temps)'
+  timesheet_group_by: Regroupé par
+  timesheet_sort_by: Trié par
+  timesheet_week_of_year: Semaine de l'année
+
+  timesheet_groupby_day: Jour
+  t_comment: Commentaire
+
+  timesheet_billed_hours: Heures facturées
+  timesheet_total: Total
+
+  t_filters: Filtres
+  t_fields_to_include: Champs à inclure
+
+  t_activities: Activités
+  t_projects: Projets
+  t_users: Utilisateurs
