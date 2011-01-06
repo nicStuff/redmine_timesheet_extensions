@@ -36,17 +36,9 @@
     <%# CPRS-MO %>
 
     <div class="custom_time_fields">
-      <p>
-        <%= f.select :start_hour, (0..23).to_a.collect {|a| [hours_min_string(a), a]}, { :include_blank => true, :required => true } -%>:<%= f.select :start_minute, minutes.collect {|m| [hours_min_string(m), m]}, { :include_blank => true } -%>
-      </p>
-      <p>
-        <%= f.select :end_hour, (0..23).to_a.collect {|a| [hours_min_string(a), a]}, { :include_blank => true, :required => true } -%>:<%=  f.select :end_minute, minutes.collect {|m| [hours_min_string(m), m]}, { :include_blank => true } -%>
-      </p>
-      <p><%= f.text_field :billed_hours, :size => 6 %></p>
+      <%= render :partial => 'common/custom_fields', :locals => {:time_entry => f} %>
     </div>
 
-    <%= render :partial => "auto_completion" %>
-    
     <%
       # FIXME
       # questa vista sovrascrive una vista esistente e si trova in un plugin:
