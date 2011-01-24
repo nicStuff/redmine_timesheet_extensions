@@ -5,7 +5,7 @@ fr:
   field_end_minute: ""
   field_billed_hours: Heures facturées
 
-  error_et_less_than_st: L'heure de fin doit être plus grande que l'heure de début
+  error_et_less_than_st: 'L''heure de fin doit être plus grande que l''heure de début'
   error_et_mandatory_ifnot_hours: est requis si le champ heure est vide
   error_h_mb_grthan_zero: doit être plus grand que 0
 
@@ -15,10 +15,10 @@ fr:
   timesheet_date_to_label: à
   timesheet_users_label: Utilisateurs
   timesheet_showing_users: 'montré le temps pour : '
-  timesheet_permalink: '(Lien permanent vers la feuille de temps)'
+  timesheet_permalink: '(Lien permanent vers cette feuille de temps)'
   timesheet_group_by: Regroupé par
   timesheet_sort_by: Trié par
-  timesheet_week_of_year: Semaine de l'année
+  timesheet_week_of_year: 'Semaine de l''année'
 
   timesheet_groupby_day: Jour
   t_comment: Commentaire
@@ -32,3 +32,8 @@ fr:
   t_activities: Activités
   t_projects: Projets
   t_users: Utilisateurs
+
+  t_javascript_warns:
+    st_after_et: 'Attention!!! L''heure de fin précède l''heure de début'
+    st_notinday: 'Attention!!! L''heure de début ne se situe pas dans la journée en cours'
+    et_notinday: 'Attention!!! L''heure de fin ne se situe pas dans la journée en cours'
