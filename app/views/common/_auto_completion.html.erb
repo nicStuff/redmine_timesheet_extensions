@@ -104,7 +104,7 @@
           var endMinute = parseFloat(document.getElementById('time_entry_end_minute').options[endMinuteIndex].value);
           var hours = Math.round(((endHour * 60 + endMinute - (startHour * 60 + startMinute)) / 60) * 100) / 100;
           if (hours < 0) {
-              alert("Attenzione!!! L'orario di inizio è successivo all'orario di fine.");
+              alert("<%= l('t_javascript_warns.st_after_et') %>");
               document.getElementById('time_entry_hours').value = null;
           } else {
               document.getElementById('time_entry_hours').value = hours
@@ -126,7 +126,7 @@
           var endMinute = document.getElementById('time_entry_end_minute').options[endMinuteIndex].value;
           var startTime = (parseFloat(endHour) * 60 + parseFloat(endMinute)) - (parseFloat(hours) * 60);
           if (startTime < 0) {
-              alert("Attenzione!!! L'orario di inizio non è compreso nella giornata corrente.");
+              alert("<%= l('t_javascript_warns.st_notinday') %>");
               document.getElementById('time_entry_start_hour').selectedIndex = 0;
               document.getElementById('time_entry_start_minute').selectedIndex = 0;
           } else {
@@ -152,7 +152,7 @@
           var startMinute = document.getElementById('time_entry_start_minute').options[startMinuteIndex].value;
           var endTime = (parseFloat(startHour) * 60 + parseFloat(startMinute)) + (parseFloat(hours) * 60);
           if (endTime >= 24*60) {
-              alert("Attenzione!!! L'orario di fine non è compreso nella giornata corrente.");
+              alert("<%= l('t_javascript_warns.et_notinday') %>");
               document.getElementById('time_entry_end_hour').selectedIndex = 0;
               document.getElementById('time_entry_end_minute').selectedIndex = 0;
           } else {

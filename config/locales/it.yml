@@ -32,3 +32,8 @@ it:
   t_activities: Attività
   t_projects: Progetti
   t_users: Utenti
+  
+  t_javascript_warns:
+    st_after_et: Attenzione!!! L'orario di inizio è successivo all'orario di fine
+    st_notinday: Attenzione!!! L'orario di inizio non è compreso nella giornata corrente
+    et_notinday: Attenzione!!! L'orario di fine non è compreso nella giornata corrente

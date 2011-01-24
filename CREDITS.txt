@@ -1,0 +1,8 @@
+Main developer:
+
+	Nicola Baisero
+
+Many thanks to the following contributors:
+
+	Charlse Sanquer (french translation)
+	Oscar Sangoi (javascript)

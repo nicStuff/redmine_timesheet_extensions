@@ -32,3 +32,8 @@ en:
   t_activities: Activities
   t_projects: Projects
   t_users: Users
+  
+  t_javascript_warns:
+    st_after_et: Warning!!! End time is previous than start time
+    st_notinday: Warning!!! Start time isn't in the current day
+    et_notinday: Warning!!! End time isn't in the current day
