@@ -1,0 +1,39 @@
+de:
+  field_start_hour: Startzeit
+  field_start_minute: ""
+  field_end_hour: Endzeit
+  field_end_minute: ""
+  field_billed_hours: Abgerechnete Stunden
+
+  error_et_less_than_st: Endzeit muss größer als Startzeit sein
+  error_et_mandatory_ifnot_hours: muss angegeben werdden, wenn Stundenfeld leer ist
+  error_h_mb_grthan_zero: muss gröser als 0 sein
+
+  timesheet_title: Stundenzettel
+  timesheet_period: Zeitraum
+  timesheet_date_from_label: Von
+  timesheet_date_to_label: Bis
+  timesheet_users_label: Benutzer/innen
+  timesheet_showing_users: 'Zeit wird angezeigt für: '
+  timesheet_permalink: '(Permalink zu diesem Stundenzettel)'
+  timesheet_group_by: Gruppieren nach
+  timesheet_sort_by: Sortieren nach
+  timesheet_week_of_year: Kalenderwoche
+
+  timesheet_groupby_day: Tag
+  t_comment: Kommentar
+
+  timesheet_billed_hours: Abgerechnete Stunden
+  timesheet_total: Summe
+
+  t_filters: Filter
+  t_fields_to_include: Ausgabefelder
+
+  t_activities: Aktivitäten
+  t_projects: Projekte
+  t_users: Benutzer/innen
+
+  t_javascript_warns:
+    st_after_et: Achtung!!! Endzeitpunkt ist vor dem Startzeitpunkt
+    st_notinday: Achtung!!! Startzeitpunkt ist nicht am heutigen Tag
+    et_notinday: Achtung!!! Endzeitpunkt ist nicht am heutigen Tag
