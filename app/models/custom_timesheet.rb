@@ -1,7 +1,7 @@
 # Mantiene l'insieme dei risultati applicando il group by a mano a mano che
 # vengono aggiunti
 class Grouer
-  attr_reader :time_entries
+	attr_reader :time_entries
 
   def initialize(campi_gby)
     @campi = campi_gby
@@ -18,7 +18,9 @@ class Grouer
     raise "TimeEntry \"#{entry.inspect}\" non valida" if entry.nil?
 
     entry.class.class_eval do
-      attr_accessor :attributes
+      def attributes
+        @attributes
+      end
     end
 
     # da attributes estraggo uno hash con le sole chiavi di @campi
@@ -65,7 +67,7 @@ class Grouer
 end
 
 class CustomTimesheet
-  # Campi da visualizzare
+	# Campi da visualizzare
   attr_accessor :selected_fields
 
   # Filtri
@@ -179,6 +181,8 @@ class CustomTimesheet
 
     results.each { |t| g.add_time_entry t }
     @time_entries = g.time_entries
+
+    #@time_entries = results
 
     calculate_total_time
   end
