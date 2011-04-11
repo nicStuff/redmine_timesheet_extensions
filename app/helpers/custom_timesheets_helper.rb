@@ -5,7 +5,7 @@ module CustomTimesheetsHelper
 
   def permalink_to_timesheet(timesheet)
     link_to(l(:timesheet_permalink),
-            :controller => 'timesheet',
+            :controller => 'custom_timesheet',
             :action => 'report',
             :timesheet => timesheet.to_param)
   end
