@@ -1,0 +1,39 @@
+pt-BR:
+  field_start_hour: Data Inicial
+  field_start_minute: ""
+  field_end_hour: Data Final
+  field_end_minute: ""
+  field_billed_hours: Horas Trabalhadas
+  
+  error_et_less_than_st: Data Final deve ser maior do que a Data Inicial
+  error_et_mandatory_ifnot_hours: é obrigatório de o campo Horas estiver vazio
+  error_h_mb_grthan_zero: deve ser maior do que 0
+  
+  timesheet_title: Timesheet
+  timesheet_period: Periodo
+  timesheet_date_from_label: apartir
+  timesheet_date_to_label: até
+  timesheet_users_label: Users
+  timesheet_showing_users: 'Mostrando o tempo de: '
+  timesheet_permalink: '(Link permanente para o timesheet)'
+  timesheet_group_by: pelo grupo
+  timesheet_sort_by: classificar por
+  timesheet_week_of_year: semana do ano
+  
+  timesheet_groupby_day: Dia
+  t_comment: Comentario
+  
+  timesheet_billed_hours: horas trabalhadas
+  timesheet_total: Total
+  
+  t_filters: Filtros
+  t_fields_to_include: Campos para incluir
+  
+  t_activities: Atividades
+  t_projects: Projetos
+  t_users: Usuarios
+  
+  t_javascript_warns:
+    st_after_et: Atenção!!! Hora de término é anterior a hora de início
+    st_notinday: Atenção!!! Hora de início não é a data de hoje
+    et_notinday: Atenção!!! Hora de término não é a data de hoje
