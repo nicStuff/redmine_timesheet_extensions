@@ -248,15 +248,16 @@ class CustomTimesheet
   end
 
   def to_csv
-    returning '' do |out|
-      FCSV.generate out do |csv|
+    #returning '' do |out|
+      export = FCSV.generate(:col_sep => l(:general_csv_separator)) do |csv|
         csv << csv_header
         
         @time_entries.each do |t|
           csv << time_entry_to_csv(t)
         end
       end
-    end
+      export="\xEF\xBB\xBF"+export
+    #end
   end
 
   def self.viewable_users
@@ -300,8 +301,8 @@ class CustomTimesheet
     csv_data.push("#{time_entry.issue.tracker.name} ##{time_entry.issue.id}") if @selected_fields.include?('issue_id') && time_entry.issue
     csv_data.push(time_entry.issue.subject) if @selected_fields.include?('issue_id') && time_entry.issue
     csv_data.push(time_entry.comments) if @selected_fields.include?('comments')
-    csv_data.push(time_entry.hours) if @selected_fields.include?('hours')
-    csv_data.push(time_entry.billed_hours) if @selected_fields.include?('billed_hours')
+    csv_data.push(time_entry.hours.to_s.gsub('.',l(:general_csv_decimal_separator))) if @selected_fields.include?('hours')
+    csv_data.push(time_entry.billed_hours.to_s.gsub('.',l(:general_csv_decimal_separator))) if @selected_fields.include?('billed_hours')
 
     return csv_data
   end
