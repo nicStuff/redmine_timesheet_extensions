@@ -4,8 +4,6 @@
 =end
 require_dependency 'time_entry'
 
-
-
 module TimeEntryPatch
   def self.included(base)
     base.extend ClassMethods
@@ -20,7 +18,9 @@ module TimeEntryPatch
       before_save :set_time_and_duration
       
       validates_numericality_of :billed_hours, :allow_nil => true
-      
+
+      add_custom_self_attributes 'start_hour', 'start_minute', 'end_hour', 'end_minute', 'billed_hours'
+
       # I getter per l'ora di inizio devo metterli per forza qui, né nel modulo
       # TimeEntryPatch né nel modulo InstanceMethods funzionano correttamente,
       # nemmeno con il modificatore public.
@@ -34,6 +34,7 @@ module TimeEntryPatch
         return @start_minute unless @start_minute.blank?
         return start_time.min unless start_time.blank?
       end
+
     end
   end
   
@@ -111,5 +112,8 @@ module TimeEntryPatch
   end
 
   module ClassMethods
+    def add_custom_self_attributes(*args)
+      args.each {|arg| safe_attributes[0][0] << arg}
+    end
   end
 end

@@ -1,4 +1,0 @@
-# Gemfile
-source "http://rubygems.org"
-#gem "dispatcher", "~> 0.0.1"
-gemspec

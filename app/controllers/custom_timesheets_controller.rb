@@ -14,8 +14,6 @@ class CustomTimesheetsController < ApplicationController
 
   SessionKey = 'timesheet_filter'
 
-  verify :method => :delete, :only => :reset, :render => {:nothing => true, :status => :method_not_allowed }
-
   def index
     load_filters_from_session
     @timesheet ||= CustomTimesheet.new
@@ -105,7 +103,7 @@ class CustomTimesheetsController < ApplicationController
     if User.current.admin?
       return Project.find(:all, :order => 'name ASC')
     else
-      return Project.find(:all, :conditions => Project.visible_by(User.current), :order => 'name ASC')
+      return Project.find(:all, :conditions => Project.visible_condition(User.current), :order => 'name ASC')
     end
   end
 

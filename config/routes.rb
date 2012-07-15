@@ -1,7 +1,6 @@
-ActionController::Routing::Routes.draw do |map|
-
-  map.connect '/custom_timesheet_controller', :controller => 'custom_timesheets', :action => 'index'
-
-  map.connect 'custom_timesheet/report.:format', :controller => 'custom_timesheets', :action => 'report'
-  map.connect 'custom_timesheet/reset', :controller => 'custom_timesheets', :action => 'reset', :conditions => { :method => :delete }
+RedmineApp::Application.routes.draw do
+  match 'custom_timesheet_controller' => 'custom_timesheets#index'
+  match 'custom_timesheet/report(.:format)' => 'custom_timesheets#report'
+  match 'custom_timesheet/reset' => 'custom_timesheets#reset', :via => :delete
+  match 'custom_timesheet/context_menu' => 'custom_timesheets#context_menu'
 end

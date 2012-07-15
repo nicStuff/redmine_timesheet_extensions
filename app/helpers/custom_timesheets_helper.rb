@@ -5,7 +5,7 @@ module CustomTimesheetsHelper
 
   def permalink_to_timesheet(timesheet)
     link_to(l(:timesheet_permalink),
-            :controller => 'custom_timesheet',
+            :controller => 'custom_timesheets',
             :action => 'report',
             :timesheet => timesheet.to_param)
   end
@@ -13,7 +13,7 @@ module CustomTimesheetsHelper
   def link_to_csv_export(timesheet)
     link_to('CSV',
             {
-              :controller => 'custom_timesheet',
+              :controller => 'custom_timesheets',
               :action => 'report',
               :format => 'csv',
               :timesheet => timesheet.to_param

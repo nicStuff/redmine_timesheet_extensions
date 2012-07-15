@@ -54,6 +54,7 @@ class Grouer
       # TODO una time_entry contiene anche @user, @project, @activity, @issue: vedere se togliere queste cose quando si castrano gli attributi. sempre nello stesso posto, @attributes_cache può dare problemi?
       dup_entry = entry.dup
       dup_entry.attributes = filtered_attributes.dup
+      dup_entry.attributes['id'] = entry.id
 
       @time_entries.push(dup_entry)
     end
@@ -248,15 +249,15 @@ class CustomTimesheet
   end
 
   def to_csv
-    returning '' do |out|
-      FCSV.generate out do |csv|
-        csv << csv_header
-        
-        @time_entries.each do |t|
-          csv << time_entry_to_csv(t)
-        end
+    result = FCSV.generate do |csv|
+      csv << csv_header
+
+      @time_entries.each do |t|
+        csv << time_entry_to_csv(t)
       end
     end
+
+    result
   end
 
   def self.viewable_users
