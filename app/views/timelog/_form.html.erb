@@ -1,0 +1,58 @@
+<%
+  # TODO concettualmente questi metodi sono helper e andrebbero quindi definiti
+  #      nel file helper
+
+  # Aggiunge uno "0" davanti al numero passato se è minore di 10
+  def hours_min_string(number)
+    str = number.to_s
+    str = "0#{number}" if number < 10
+    str
+  end
+
+  # Restituisce un array di interi da 0 a 55 andando di 5 in 5
+  def minutes
+    mins = Array.new
+    (0..3).each { |i| mins << 15 * i}
+    mins
+  end
+%>
+
+<%= error_messages_for 'time_entry' %>
+<%= back_url_hidden_field_tag %>
+
+<div class="box tabular">
+  <% if @time_entry.new_record? %>
+    <% if params[:project_id] %>
+      <%= f.hidden_field :project_id %>
+    <% else %>
+      <p><%= f.select :project_id, project_tree_options_for_select(Project.allowed_to(:log_time).all, :selected => @time_entry.project), :required => true %></p>
+    <% end %>
+  <% end %>
+  <p><%= f.text_field :issue_id, :size => 6 %> <em><%= "#{@time_entry.issue.tracker.name} ##{@time_entry.issue.id}: #{@time_entry.issue.subject}" if @time_entry.issue %></em></p>
+  <p><%= f.text_field :spent_on, :size => 10, :required => true %><%= calendar_for('time_entry_spent_on') %></p>
+  <p><%= f.text_field :hours, :size => 6, :required => true %></p>
+  <p><%= f.text_field :comments, :size => 100 %></p>
+  <p><%= f.select :activity_id, activity_collection_for_select_options(@time_entry), :required => true %></p>
+  <% @time_entry.custom_field_values.each do |value| %>
+    <p><%= custom_field_tag_with_label :time_entry, value %></p>
+  <% end %>
+
+  <%# CPRS-MO %>
+
+  <div class="custom_time_fields">
+    <%= render :partial => 'common/custom_fields', :locals => {:time_entry => f} %>
+  </div>
+
+  <%
+    # FIXME
+    # questa vista sovrascrive una vista esistente e si trova in un plugin:
+    # lo hook non può essere chiamato da qui. non si sa cosa succede se
+    # un altro componente usa lo hook (se questo è definito perché la vista
+    # è stata già sovrascritta, se invece non è definito oppure se avvengono
+    # situazioni inconsistenti).
+    #
+    # call_hook(:view_timelog_edit_form_bottom, { :time_entry => @time_entry, :form => f })
+  %>
+
+  <%# ECPRS-MO %>
+</div>

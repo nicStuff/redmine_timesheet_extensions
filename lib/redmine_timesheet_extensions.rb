@@ -1,0 +1,3 @@
+module RedmineTimesheetExtensions
+  # Your code goes here...
+end
