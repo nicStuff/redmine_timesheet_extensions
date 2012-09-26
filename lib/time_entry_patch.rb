@@ -81,7 +81,7 @@ module TimeEntryPatch
 
     def set_time_and_duration
       #logger.info "set_time_and_duration"
-      self.start_time = Time.gm spent_on.year, spent_on.month, spent_on.day, start_hour, start_minute, 0
+      self.start_time = Time.local spent_on.year, spent_on.month, spent_on.day, start_hour, start_minute, 0
 
       if !@end_hour.blank? && !@end_minute.blank? && @end_time > @begin_time
         logger.info "Start & end time: " + @begin_time.to_s + " " + @end_time.to_s
