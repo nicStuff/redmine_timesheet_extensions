@@ -21,19 +21,11 @@
   var timeEntryEndHour = document.getElementById("time_entry_end_hour");
   var timeEntryEndMinute = document.getElementById("time_entry_end_minute");
 
-  if (timeEntryHours.addEventListener) {
-      timeEntryHours.addEventListener("change", TimeEntryHoursAfterUpdate, false);
-      timeEntryStartHour.addEventListener("change", TimeEntryStartAfterUpdate, false);
-      timeEntryStartMinute.addEventListener("change", TimeEntryStartAfterUpdate, false);
-      timeEntryEndHour.addEventListener("change", TimeEntryEndAfterUpdate, false);
-      timeEntryEndMinute.addEventListener("change", TimeEntryEndAfterUpdate, false);
-  } else if (timeEntryHour.attachEvent) {
-      timeEntryHours.attachEvent("change", TimeEntryHoursAfterUpdate);
-      timeEntryStartHour.attachEvent("change", TimeEntryStartAfterUpdate);
-      timeEntryStartMinute.attachEvent("change", TimeEntryStartAfterUpdate);
-      timeEntryEndHour.attachEvent("change", TimeEntryEndAfterUpdate);
-      timeEntryEndMinute.attachEvent("change", TimeEntryEndAfterUpdate);
-  }
+  timeEntryHours.onchange = TimeEntryHoursAfterUpdate;
+  timeEntryStartHour.onchange = TimeEntryStartAfterUpdate;
+  timeEntryStartMinute.onchange = TimeEntryStartAfterUpdate;
+  timeEntryEndHour.onchange = TimeEntryEndAfterUpdate;
+  timeEntryEndMinute.onchange = TimeEntryEndAfterUpdate;
 
   /*
    * Funzione chiamata in seguito all'aggiornamento della casella delle ore.
