@@ -40,7 +40,35 @@
 		  document.getElementById('time_entry_start_minute').selectedIndex = 1;
 	  }  
   }    
-
+  
+  /*
+   * Set the time of these time controls to the current time
+   */
+  function setNowTime(hourComboId, minuteComboId)
+  {
+      var currentTime = new Date();
+	  var hours = currentTime.getHours();
+	  var minutes = currentTime.getMinutes();
+      var hourCombo = document.getElementById(hourComboId);
+      var minuteCombo = document.getElementById(minuteComboId);
+	  for(var i = 0; i < hourCombo.options.length; i++)
+	  {
+	  	  if (hourCombo.options[i].value == hours)
+	  	  {
+	  	  	  hourCombo.selectedIndex = i;
+	  	  	  break;
+	  	  }
+	  }
+	  for(var i = 0; i < minuteCombo.options.length; i++)
+	  {
+	  	  if (minuteCombo.options[i].value == minutes)
+	  	  {
+	  	  	  minuteCombo.selectedIndex = i;
+	  	  	  break;
+	  	  }
+	  }
+  }
+  
   /*
    * Funzione chiamata in seguito all'aggiornamento della casella delle ore.
    * Se l'ora di inizio è valorizzata imposta l'ora di fine aggiungendo il numero di ore specificato all'ora di inizio.
