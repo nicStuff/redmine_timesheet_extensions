@@ -26,6 +26,20 @@
   timeEntryStartMinute.onchange = TimeEntryStartAfterUpdate;
   timeEntryEndHour.onchange = TimeEntryEndAfterUpdate;
   timeEntryEndMinute.onchange = TimeEntryEndAfterUpdate;
+  
+  setDefaultStartTime();
+
+  /* 
+  * Defaults the start time hours and minutes to 00:00.
+  */
+  function setDefaultStartTime() {
+	  var startHourIndex = document.getElementById('time_entry_start_hour').selectedIndex;
+	  var startMinuteIndex = document.getElementById('time_entry_start_minute').selectedIndex;  
+	  if (startHourIndex == 0 || startMinuteIndex == 0) {
+		  document.getElementById('time_entry_start_hour').selectedIndex = 1;
+		  document.getElementById('time_entry_start_minute').selectedIndex = 1;
+	  }  
+  }    
 
   /*
    * Funzione chiamata in seguito all'aggiornamento della casella delle ore.
@@ -38,6 +52,10 @@
       var startMinuteIndex = document.getElementById('time_entry_start_minute').selectedIndex;
       var endHourIndex = document.getElementById('time_entry_end_hour').selectedIndex;
       var endMinuteIndex = document.getElementById('time_entry_end_minute').selectedIndex;
+	  
+	  // if hours are set but start time is not, set default start time as this is a mandatory field
+	  setDefaultStartTime();	  
+	  
       if (startHourIndex > 0 && startMinuteIndex > 0) {
           setEndTime();
       } else if (endHourIndex > 0 && endMinuteIndex > 0) {
