@@ -28,7 +28,7 @@ Redmine::Plugin.register :redmine_timesheet_extensions do
   description 'Comprende una serie di estensioni per la gestione del tempo impiegato su attività e progetti.'
   version '0.1.0'
 
-  requires_redmine :version => '2.0.3'
+  requires_redmine :version => '2.2.1'
 
 
   # Impostazioni timesheet plugin modificato

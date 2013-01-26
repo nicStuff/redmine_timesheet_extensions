@@ -1,22 +1,22 @@
-<%
+﻿<%
 =begin
-XXX questa logica serve per vedere come integrare i nuovi campi della registrazione
-    del tempo nell'update di una issue. da cancellare (deve stare nel partial comune
-    con l'altra vista di edit).
+XXX This logic is to see how to integrate the new fields of the record
+     of time in the update of an issue. to be deleted (if needed, in partial common
+     the other with a view to edit).
 =end
 %>
 <%
-  # TODO concettualmente questi metodi sono helper e andrebbero quindi definiti
-  #      nel file helper
+  # TODO conceptually these methods are helpers and should therefore be defined
+  # in the file helper
 
-  # Aggiunge uno "0" davanti al numero passato se è minore di 10
+  # Adds a "0" before the number if the past is less than 10
   def hours_min_string(number)
     str = number.to_s
     str = "0#{number}" if number < 10
     str
   end
 
-  # Restituisce un array di interi da 0 a 55 andando di 5 in 5
+  # Returns an array of integers from 0 to 55 going from 5 to 5
   def minutes
     mins = Array.new
     (0..3).each { |i| mins << 15 * i}
@@ -69,13 +69,13 @@ XXX questa logica serve per vedere come integrare i nuovi campi della registrazi
     <%= f.hidden_field :lock_version %>
     <%= hidden_field_tag 'last_journal_id', params[:last_journal_id] || @issue.last_journal_id %>
     <%= submit_tag l(:button_submit) %>
-    <%= link_to_remote l(:label_preview), 
+    <%= link_to l(:label_preview), 
                        { :url => preview_edit_issue_path(:project_id => @project, :id => @issue),
                          :method => 'post',
                          :update => 'preview',
                          :with => 'Form.serialize("issue-form")',
                          :complete => "Element.scrollTo('preview')"
-                       }, :accesskey => accesskey(:preview) %>
+                       }, :accesskey => accesskey(:preview), :remote => true %>
 <% end %>
 
 <div id="preview" class="wiki"></div>
