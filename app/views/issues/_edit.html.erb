@@ -25,8 +25,6 @@ XXX This logic is to see how to integrate the new fields of the record
 %>
 
 <%= labelled_form_for @issue, :html => {:id => 'issue-form', :multipart => true} do |f| %>
-
-
     <%= error_messages_for 'issue', 'time_entry' %>
     <%= render :partial => 'conflict' if @conflict %>
     <div class="box">
@@ -58,24 +56,25 @@ XXX This logic is to see how to integrate the new fields of the record
     <% end %>
     
     <fieldset><legend><%= l(:field_notes) %></legend>
-    <%= text_area_tag 'notes', @notes, :cols => 60, :rows => 10, :class => 'wiki-edit' %>
-    <%= wikitoolbar_for 'notes' %>
+    <%= f.text_area :notes, :cols => 60, :rows => 10, :class => 'wiki-edit', :no_label => true %>
+    <%= wikitoolbar_for 'issue_notes' %>
+
+    <% if @issue.safe_attribute? 'private_notes' %>
+    <label for="issue_private_notes"><%= f.check_box :private_notes, :no_label => true %> <%= l(:field_private_notes) %></label>
+    <% end %>
+
     <%= call_hook(:view_issues_edit_notes_bottom, { :issue => @issue, :notes => @notes, :form => f }) %>
-    
-    <p><%=l(:label_attachment_plural)%><br /><%= render :partial => 'attachments/form', :locals => {:container => @issue} %></p>
+    </fieldset>
+
+    <fieldset><legend><%= l(:label_attachment_plural) %></legend>
+    <p><%= render :partial => 'attachments/form', :locals => {:container => @issue} %></p>
     </fieldset>
     </div>
-    
+
     <%= f.hidden_field :lock_version %>
     <%= hidden_field_tag 'last_journal_id', params[:last_journal_id] || @issue.last_journal_id %>
     <%= submit_tag l(:button_submit) %>
-    <%= link_to l(:label_preview), 
-                       { :url => preview_edit_issue_path(:project_id => @project, :id => @issue),
-                         :method => 'post',
-                         :update => 'preview',
-                         :with => 'Form.serialize("issue-form")',
-                         :complete => "Element.scrollTo('preview')"
-                       }, :accesskey => accesskey(:preview), :remote => true %>
+    <%= preview_link preview_edit_issue_path(:project_id => @project, :id => @issue), 'issue-form' %>
 <% end %>
 
 <div id="preview" class="wiki"></div>
