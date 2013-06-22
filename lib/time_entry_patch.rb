@@ -57,7 +57,7 @@ module TimeEntryPatch
           errors.add :end_hour, l(:error_et_mandatory_ifnot_hours)
         else
           if @end_time <= @begin_time
-            errors.add_to_base l(:error_et_less_than_st)
+            errors.add :base, l(:error_et_less_than_st)
           end
         end
       else
@@ -65,13 +65,13 @@ module TimeEntryPatch
           if hours <= 0.0
             errors.add :hours, l(:error_h_mb_grthan_zero)
             if @end_time <= @begin_time
-              errors.add_to_base l(:error_et_less_than_st)
+              errors.add :base, l(:error_et_less_than_st)
             end
           else
             if @last_time - @begin_time < float_hours_to_minutes(hours)
               errors.add :hours, "superano la giornata"
               if @end_time <= @begin_time
-                errors.add_to_base l(:error_et_less_than_st)
+                errors.add :base, l(:error_et_less_than_st)
               end
             end
           end
