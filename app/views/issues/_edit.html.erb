@@ -69,13 +69,13 @@ XXX questa logica serve per vedere come integrare i nuovi campi della registrazi
     <%= f.hidden_field :lock_version %>
     <%= hidden_field_tag 'last_journal_id', params[:last_journal_id] || @issue.last_journal_id %>
     <%= submit_tag l(:button_submit) %>
-    <%= link_to_remote l(:label_preview), 
+    <%= link_to l(:label_preview), 
                        { :url => preview_edit_issue_path(:project_id => @project, :id => @issue),
                          :method => 'post',
                          :update => 'preview',
                          :with => 'Form.serialize("issue-form")',
                          :complete => "Element.scrollTo('preview')"
-                       }, :accesskey => accesskey(:preview) %>
+                       }, :accesskey => accesskey(:preview), :remote => true %>
 <% end %>
 
 <div id="preview" class="wiki"></div>
