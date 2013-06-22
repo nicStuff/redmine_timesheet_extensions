@@ -28,7 +28,7 @@ Redmine::Plugin.register :redmine_timesheet_extensions do
   description 'Comprende una serie di estensioni per la gestione del tempo impiegato su attività e progetti.'
   version '0.1.0'
 
-  requires_redmine :version => '2.0.3'
+  requires_redmine :version => '2.3.1'
 
 
   # Impostazioni timesheet plugin modificato
@@ -41,8 +41,8 @@ Redmine::Plugin.register :redmine_timesheet_extensions do
       {:controller => 'custom_timesheets', :action => 'index'},
       :caption => :timesheet_title,
       :if => Proc.new {
-        User.current.allowed_to?(:see_project_timesheets, nil, :global => true) ||
-        User.current.allowed_to?(:view_time_entries, nil, :global => true) ||
+        #User.current.allowed_to?(:see_project_timesheets, nil, :global => true) ||
+        #User.current.allowed_to?(:view_time_entries, nil, :global => true) ||
         User.current.admin?
       })
 end
