@@ -1,7 +1,7 @@
 # Mantiene l'insieme dei risultati applicando il group by a mano a mano che
 # vengono aggiunti
 class Grouer
-	attr_reader :time_entries
+  attr_reader :time_entries
 
   def initialize(campi_gby)
     @campi = campi_gby
@@ -177,26 +177,19 @@ class CustomTimesheet
       results = fetch_all_time_entries User.current.id, sort
     end
 
-    # Faccio il group by
+    # Faccio il group by e conteggio le ore totali
     g = Grouer.new fields
-
-    results.each { |t| g.add_time_entry t }
-    @time_entries = g.time_entries
-
-    #@time_entries = results
-
-    calculate_total_time
-  end
-
-  # Calcola la somma di ore e ore fatturate di questo timesheet
-  def calculate_total_time
+    
     @total_hours = 0
     @total_billed_hours = 0
-
-    @time_entries.each do |t|
-      @total_hours += t.hours if t.attributes.has_key?('hours') && !t.hours.blank?
-      @total_billed_hours += t.billed_hours if t.attributes.has_key?('billed_hours') && !t.billed_hours.blank?
+    results.each do |t|
+      g.add_time_entry t
+      @total_hours += t.hours if !t.hours.blank?
+      @total_billed_hours += t.billed_hours if !t.billed_hours.blank?
     end
+    
+    # Completo
+    @time_entries = g.time_entries
   end
 
   def period=(period)
