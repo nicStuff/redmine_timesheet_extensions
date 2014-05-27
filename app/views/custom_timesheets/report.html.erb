@@ -56,12 +56,12 @@
               <% if selected?('id') %>
                 <td align="center">
                   <% if time_entry.editable_by?(User.current) -%>
-                    <%= link_to image_tag('edit.png'), {:controller => 'timelog', :action => 'edit', :id => time_entry.id},
-                                                     :title => l(:button_edit) %>
-                    <%= link_to image_tag('delete.png'), {:controller => 'timelog', :action => 'destroy', :id => time_entry.id},
-                                                       :confirm => l(:text_are_you_sure),
-                                                       :method => :post,
-                                                       :title => l(:button_delete) %>
+                    <%= link_to image_tag('edit.png'), edit_time_entry_path(time_entry),
+                                           :title => l(:button_edit) %>
+                    <%= link_to image_tag('delete.png'), time_entry_path(time_entry),
+                                             :data => {:confirm => l(:text_are_you_sure)},
+                                             :method => :delete,
+                                             :title => l(:button_delete) %>
                  <% end -%>
                 </td>
               <% end %>
