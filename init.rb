@@ -5,7 +5,6 @@ if RUBY_VERSION < '1.9'
   require 'faster_csv'
 else
   require 'csv'
-  FCSV = CSV
 end
 
 Rails.configuration.to_prepare do
@@ -30,9 +29,7 @@ Redmine::Plugin.register :redmine_timesheet_extensions do
 
   requires_redmine :version => '2.5.1'
 
-
   # Impostazioni timesheet plugin modificato
-
   settings :default => {'list_size' => '5', 'precision' => '2'}, :partial => 'settings/timesheet_settings'
   permission :see_project_timesheets, { }, :require => :member
 
@@ -46,6 +43,7 @@ Redmine::Plugin.register :redmine_timesheet_extensions do
         User.current.admin?
       })
 end
+
 
 
 

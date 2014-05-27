@@ -32,12 +32,12 @@
         <tbody>
           <% @timesheet.time_entries.each do |time_entry| %>
             <tr id="time_entry_<%= time_entry.id %>" class="time_entry <%= cycle("odd", "even") %> hascontextmenu">
-              <%= raw(table_col true, 'id' do check_box_tag('ids[]', time_entry.id, false, { :class => 'checkbox' }) end) %>
-              <%= raw(table_col true, 'spent_on' do format_date(time_entry.spent_on) end) %>
+              <%= raw(table_col(true, 'id') do check_box_tag('ids[]', time_entry.id, false, { :class => 'checkbox' }) end) %>
+              <%= raw(table_col(true, 'spent_on') do format_date(time_entry.spent_on) end) %>
               <%= raw(table_col(true, 'tweek') { time_entry.tweek.to_s }) %>
-              <%= raw(table_col true, 'user_id' do time_entry.user.name end) %>
-              <%= raw(table_col true, 'activity_id' do time_entry.activity.name end) %>
-              <%= raw(table_col true, 'project_id' do time_entry.project.name end) %>
+              <%= raw(table_col(true, 'user_id') do time_entry.user.name end) %>
+              <%= raw(table_col(true, 'activity_id') do time_entry.activity.name end) %>
+              <%= raw(table_col(true, 'project_id') do time_entry.project.name end) %>
               <% if selected?('issue_id') %>
                 <td align="center">
                   <% if time_entry.issue %>
@@ -50,9 +50,9 @@
                   <% end %>
                 </td>
               <% end %>
-              <%= raw(table_col false, 'comments' do time_entry.comments end) %>
-              <%= raw(table_col true, 'hours' do number_with_precision(time_entry.hours, :precision => @precision) end) %>
-              <%= raw(table_col true, 'billed_hours' do '<strong>' + number_with_precision(time_entry.billed_hours, :precision => @precision) + '</strong>' unless time_entry.billed_hours.blank? end) %>
+              <%= raw(table_col(false, 'comments') do time_entry.comments end) %>
+              <%= raw(table_col(true, 'hours') do number_with_precision(time_entry.hours, :precision => @precision) end) %>
+              <%= raw(table_col(true, 'billed_hours') do '<strong>' + number_with_precision(time_entry.billed_hours, :precision => @precision) + '</strong>' unless time_entry.billed_hours.blank? end) %>
               <% if selected?('id') %>
                 <td align="center">
                   <% if time_entry.editable_by?(User.current) -%>
